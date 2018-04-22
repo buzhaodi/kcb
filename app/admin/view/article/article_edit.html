@@ -1,0 +1,153 @@
+<form action="{:url()}" method="post" class="form_single">
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>课程编码</label>
+                    <span class="">（课程编码）</span>
+                    <input class="form-control" name="code" placeholder="课程编码" value="{$info['code']|default=''}" type="text">
+                </div>
+            </div>
+
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>课程名称</label>
+              <span class="">（课程名称）</span>
+              <input class="form-control" name="name" placeholder="请输入文章标题名称" value="{$info['name']|default=''}" type="text">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>分类</label>
+              <span class="">（文章分类）</span>
+                <select name="category_id" class="form-control">
+                    {volist name='article_category_list' id='vo'}
+                        <option value="{$vo['id']}" {notempty name="info['category_id']"}{if condition="$info['category_id'] eq $vo['id']"} selected="selected" {/if}{/notempty} >{$vo['name']}</option>
+                    {/volist}
+                </select>
+            </div>
+          </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>总学分</label>
+                    <span class="">（总学分）</span>
+                    <input class="form-control" name="totalcredits" placeholder="总学分" value="{$info['totalcredits']|default=''}" type="text">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>实践学时</label>
+                    <span class="">（实践学时）</span>
+                    <input class="form-control" name="dopperiod" placeholder="实践学时" value="{$info['dopperiod']|default=''}" type="text">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>教授学时</label>
+                    <span class="">（教授学时）</span>
+                    <input class="form-control" name="professorperiod" placeholder="教授学时" value="{$info['professorperiod']|default=''}" type="text">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>学期安排</label>
+                    <span class="">（学期安排）</span>
+                    <select name="plan" class="form-control">
+                        {for start="1" end="9"}
+                        <option value="{$i}" {notempty name="info['plan']"}{if condition="$info['plan'] eq $i"} selected="selected" {/if} {/notempty}  name="plan">{$i}</option>
+                        {/for}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>考试方式</label>
+                    <span class="">（考试方式）</span>
+                    <select name="testway" class="form-control">
+                        <option value="1" name="testway"  {notempty name="info['testway']"}{if condition="$info['testway'] eq 1"} selected="selected" {/if}{/notempty}>考试</option>
+                        <option value="2" name="testway" {notempty name="info['testway']"}{if condition="$info['plan'] eq 2"} selected="selected" {/if}{/notempty}>考察</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+
+
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label>描述</label>
+                <span class="">（课程描述信息/简介）</span>
+                <textarea class="form-control" name="describe" rows="3" placeholder="请输入文章描述信息/简介">{$info['describe']|default=''}</textarea>
+            </div>
+          </div>
+            
+            
+            
+          <div class="col-md-6">
+            <div class="form-group">
+                <label>课程图片</label>
+                <span class="">（请上传单张封面图片）</span>
+                <br/>
+                {assign name="cover_id" value="$info.cover_id|default='0'" /}
+                {:hook('File', ['name' => 'cover_id', 'value' => $cover_id, 'type' => 'img'])}
+            </div>
+          </div>
+            
+          <div class="col-md-6">
+            <div class="form-group">
+                <label>多图片</label>
+                <span class="">（请上传多图片）</span>
+                <br/>
+                
+                {assign name="img_ids" value="$info.img_ids|default=''" /}
+                
+                {:hook('File', ['name' => 'img_ids', 'value' => $img_ids, 'type' => 'imgs'])}
+            </div>
+          </div>
+            
+            
+          <div class="col-md-6">
+            <div class="form-group">
+                <label>附件</label>
+                <span class="">（详情页下载附件）</span>
+                <br/>
+                {assign name="file_id" value="$info.file_id|default='0'" /}
+                {:hook('File', ['name' => 'file_id', 'value' => $file_id, 'type' => 'file'])}
+            </div>
+          </div>
+            
+          </div>
+        <div class="row">
+           
+            
+          <div class="col-md-12">
+            <div class="form-group">
+                <label>课程介绍</label>
+                <textarea class="form-control textarea_editor" name="content" placeholder="请输入文章内容">{$info['content']|default=''}</textarea>
+                {:hook('ArticleEditor', array('name'=> 'content','value'=> ''))}
+            </div>
+          </div>
+            
+        </div>
+        
+      <div class="box-footer">
+          
+        <input type="hidden" name="id" value="{$info['id']|default='0'}"/>
+        
+        {include file="layout/edit_btn_group"/}
+        
+      </div>
+        
+      </div>
+      </div>
+</form>
